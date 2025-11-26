@@ -2,7 +2,14 @@
 
 <template>
   <div>
-   <UHeader ></UHeader>
+   <UHeader >
+     <template #title>
+       <logo class="h-6 w-auto" />
+     </template>
+     <template #right>
+       <UColorModeButton />
+     </template>
+   </UHeader>
   </div>
 </template>
 

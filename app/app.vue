@@ -1,6 +1,13 @@
 <template>
   <div>
     <NuxtRouteAnnouncer/>
-    <or-header/>
+    <UApp>
+      <UMain>
+        <NuxtLayout>
+          <NuxtPage/>
+        </NuxtLayout>
+      </UMain>
+    </UApp>
+
   </div>
 </template>
