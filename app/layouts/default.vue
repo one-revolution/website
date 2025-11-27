@@ -6,7 +6,7 @@
     <UContainer >
       <slot/>
     </UContainer>
-
+  <or-footer />
   </div>
 </template>
 
