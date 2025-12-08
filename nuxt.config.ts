@@ -31,6 +31,7 @@ export default defineNuxtConfig({
 
     },
     modules: [
+        '@nuxt/content',
         '@nuxt/image',
         '@nuxt/scripts',
         '@nuxt/test-utils',
