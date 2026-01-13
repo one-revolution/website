@@ -4,7 +4,7 @@
   <div>
    <UHeader >
      <template #title>
-       <logo class="h-6 w-auto" />
+       <or-logo class="h-6 w-auto" />
      </template>
      <template #right>
        <UColorModeButton />

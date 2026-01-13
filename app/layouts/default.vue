@@ -36,7 +36,7 @@ const resourceLinks = [
 <UDashboardGroup unit="rem">
  <UDashboardSidebar class="bg-neutral-900">
    <template #header="{ collapsed }">
-     <logo class="h-6 w-auto" />
+     <or-logo class="h-6 w-auto" />
    </template>
 
 
