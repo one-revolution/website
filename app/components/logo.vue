@@ -1,8 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>
-   <nuxt-img src="/one-revolution/logo_epe2b6" alt="One Revolution" width="50" height="50" />
+  <div class="flex items-center">
+    <nuxt-link to="/">
+      <nuxt-img src="/one-revolution/logo_rdwi0t" alt="One Revolution" width="150" height="75"/>
+    </nuxt-link>
   </div>
 </template>
 
