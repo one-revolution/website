@@ -1,8 +1,10 @@
 <script setup lang="ts">
 
 import {useDashboard} from "#ui/utils/dashboard";
+import type {DropdownMenuItem} from "#ui/components/DropdownMenu.vue";
 
 const { isNotificationsSlideoverOpen } = useDashboard()
+
 const items = [[{
   label: 'New mail',
   icon: 'i-lucide-send',
