@@ -1,7 +1,28 @@
 import type { AvatarProps } from '@nuxt/ui'
 
 export type UserStatus = 'subscribed' | 'unsubscribed' | 'bounced'
-export type SaleStatus = 'paid' | 'failed' | 'refunded'
+export interface Author {
+  name: string
+  avatar: string
+  npub: string
+  displayName: string
+  lightning: string
+  lnUrl: string
+  website: string
+  about: string
+}
+export interface Article {
+  id: string
+  pubkey: string
+  title: string
+  summary: string
+  content: string
+  date: string
+  image: string
+  tags: string[]
+  published: Date
+  author: Author
+}
 
 export interface User {
   id: number
@@ -28,33 +49,10 @@ export interface Member {
   avatar: AvatarProps
 }
 
-export interface Stat {
-  title: string
-  icon: string
-  value: number | string
-  variation: number
-  formatter?: (value: number) => string
-}
-
-export interface Sale {
-  id: string
-  date: string
-  status: SaleStatus
-  email: string
-  amount: number
-}
-
 export interface Notification {
   id: number
   unread?: boolean
   sender: User
   body: string
   date: string
-}
-
-export type Period = 'daily' | 'weekly' | 'monthly'
-
-export interface Range {
-  start: Date
-  end: Date
 }
