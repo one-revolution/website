@@ -1,69 +1,90 @@
 <script setup lang="ts">
-import { sub } from 'date-fns'
-import type { DropdownMenuItem } from '@nuxt/ui'
-import type { Period, Range } from '~/types'
+import { computed, ref, watch } from 'vue'
+import { breakpointsTailwind } from '@vueuse/core'
+import type { Mail } from '~/types'
 
-const { isNotificationsSlideoverOpen } = useDashboard()
-
-const items = [[{
-  label: 'New mail',
-  icon: 'i-lucide-send',
-  to: '/inbox'
+const tabItems = [{
+  label: 'All',
+  value: 'all'
 }, {
-  label: 'New customer',
-  icon: 'i-lucide-user-plus',
-  to: '/customers'
-}]] satisfies DropdownMenuItem[][]
+  label: 'Unread',
+  value: 'unread'
+}]
+const selectedTab = ref('all')
 
-const range = shallowRef<Range>({
-  start: sub(new Date(), { days: 14 }),
-  end: new Date()
+const { data: mails } = await useFetch<Mail[]>('/api/mails', { default: () => [] })
+
+// Filter mails based on the selected tab
+const filteredMails = computed(() => {
+  if (selectedTab.value === 'unread') {
+    return mails.value.filter(mail => !!mail.unread)
+  }
+
+  return mails.value
 })
-const period = ref<Period>('daily')
+
+const selectedMail = ref<Mail | null>()
+
+const isMailPanelOpen = computed({
+  get() {
+    return !!selectedMail.value
+  },
+  set(value: boolean) {
+    if (!value) {
+      selectedMail.value = null
+    }
+  }
+})
+
+// Reset selected mail if it's not in the filtered mails
+watch(filteredMails, () => {
+  if (!filteredMails.value.find(mail => mail.id === selectedMail.value?.id)) {
+    selectedMail.value = null
+  }
+})
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isMobile = breakpoints.smaller('lg')
 </script>
 
 <template>
-  <UDashboardPanel id="home">
-    <template #header>
-      <UDashboardNavbar title="Home" :ui="{ right: 'gap-3' }">
-        <template #leading>
-          <UDashboardSidebarCollapse />
-        </template>
+  <UDashboardPanel
+    id="inbox-1"
+    :default-size="25"
+    :min-size="20"
+    :max-size="30"
+    resizable
+  >
+    <UDashboardNavbar title="General">
+      <template #leading>
+        <UDashboardSidebarCollapse />
+      </template>
+      <template #trailing>
+        <UBadge :label="filteredMails.length" variant="subtle" />
+      </template>
 
-        <template #right>
-          <UTooltip text="Notifications" :shortcuts="['N']">
-            <UButton
-              color="neutral"
-              variant="ghost"
-              square
-              @click="isNotificationsSlideoverOpen = true"
-            >
-              <UChip color="error" inset>
-                <UIcon name="i-lucide-bell" class="size-5 shrink-0" />
-              </UChip>
-            </UButton>
-          </UTooltip>
-
-          <UDropdownMenu :items="items">
-            <UButton icon="i-lucide-plus" size="md" class="rounded-full" />
-          </UDropdownMenu>
-        </template>
-      </UDashboardNavbar>
-
-      <UDashboardToolbar>
-        <template #left>
-          <!-- NOTE: The `-ms-1` class is used to align with the `DashboardSidebarCollapse` button here. -->
-          <HomeDateRangePicker v-model="range" class="-ms-1" />
-
-          <HomePeriodSelect v-model="period" :range="range" />
-        </template>
-      </UDashboardToolbar>
-    </template>
-
-    <template #body>
-      <HomeStats :period="period" :range="range" />
-      <HomeChart :period="period" :range="range" />
-      <HomeSales :period="period" :range="range" />
-    </template>
+      <template #right>
+        <UTabs
+          v-model="selectedTab"
+          :items="tabItems"
+          :content="false"
+          size="xs"
+        />
+      </template>
+    </UDashboardNavbar>
+    <InboxList v-model="selectedMail" :mails="filteredMails" />
   </UDashboardPanel>
+
+  <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+  <div v-else class="hidden lg:flex flex-1 items-center justify-center">
+    <UIcon name="material-symbols:article-outline" class="size-32 text-dimmed" />
+  </div>
+
+  <ClientOnly>
+    <USlideover v-if="isMobile" v-model:open="isMailPanelOpen">
+      <template #content>
+        <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+      </template>
+    </USlideover>
+  </ClientOnly>
 </template>

@@ -8,15 +8,8 @@ const open = ref(false)
 
 const links = [[{
   label: 'Home',
-  icon: 'i-lucide-house',
-  to: '/',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
-  label: 'Inbox',
   icon: 'i-lucide-inbox',
-  to: '/inbox',
+  to: '/',
   badge: '4',
   onSelect: () => {
     open.value = false
