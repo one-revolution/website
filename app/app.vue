@@ -1,21 +1,8 @@
-<template>
-    <UApp>
-      <NuxtRouteAnnouncer />
-      <NuxtLoadingIndicator />
-      <UMain>
-        <NuxtLayout>
-          <NuxtPage/>
-        </NuxtLayout>
-      </UMain>
-    </UApp>
-</template>
 <script setup lang="ts">
 const colorMode = useColorMode()
-const color = computed(() => colorMode.value === 'dark' ? 'dark' : 'light')
 
+const color = computed(() => colorMode.value === 'dark' ? '#1b1718' : 'white')
 
-const title = 'One Revolution'
-const description = ''
 useHead({
   meta: [
     { charset: 'utf-8' },
@@ -30,6 +17,9 @@ useHead({
   }
 })
 
+const title = 'Nuxt Dashboard Template'
+const description = 'A professional dashboard template built with Nuxt UI, featuring multiple pages, data visualization, and comprehensive management capabilities for creating powerful admin interfaces.'
+
 useSeoMeta({
   title,
   description,
@@ -40,3 +30,13 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 </script>
+
+<template>
+  <UApp>
+    <NuxtLoadingIndicator />
+
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </UApp>
+</template>

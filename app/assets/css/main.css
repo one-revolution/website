@@ -1,21 +1,18 @@
 @import "tailwindcss" theme(static);
 @import "@nuxt/ui";
 
-:root {
-    --ui-header-height: --spacing(20);
-    --ui-bg: var(--ui-color-primary-50);
-    --ui-border: var(--ui-color-primary-100);
+@theme static {
+  --font-sans: 'Public Sans', sans-serif;
+
+  --color-green-50: #EFFDF5;
+  --color-green-100: #D9FBE8;
+  --color-green-200: #B3F5D1;
+  --color-green-300: #75EDAE;
+  --color-green-400: #00DC82;
+  --color-green-500: #00C16A;
+  --color-green-600: #00A155;
+  --color-green-700: #007F45;
+  --color-green-800: #016538;
+  --color-green-900: #0A5331;
+  --color-green-950: #052E16;
 }
-.dark {
-    --ui-bg: var(--ui-color-neutral-800);
-    --ui-border: var(--ui-color-neutral-800);
-}
-h1, h2, h3, h4 , h5, h6 {
-    @apply font-bold text-orange-500 mt-3;
-}
-p {
-    @apply mt-5;
-}
-.content ul { @apply list-disc list-inside mt-3 indent-4 ml-2 marker:text-yellow-500; }
-.content ol { @apply list-decimal list-inside mt-3 ml-2 indent-4 marker:text-yellow-500; }
-.content li { @apply indent-2 mt-2; }
