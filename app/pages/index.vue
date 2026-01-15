@@ -2,10 +2,10 @@
 import { computed, ref, onMounted } from 'vue'
 import { breakpointsTailwind } from '@vueuse/core'
 import type { Article } from '~/types'
-import { useGlobalFeedStore } from '~/stores/feed/global'
+import { useFeedStore } from '~/stores/feed/feedStore'
 import { useNDKStore } from '~/stores/ndk'
 
-const feedStore = useGlobalFeedStore()
+const feedStore = useFeedStore()
 const ndkStore = useNDKStore()
 
 onMounted(async () => {

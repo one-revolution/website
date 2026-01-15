@@ -27,12 +27,12 @@ export const useNDKStore = defineStore('ndk', () => {
   const instance = ref<NDK | null>(null)
 
   // Getters (computed)
-  const ndk = computed(() => {
+  function getNDK(): NDK {
     if (!instance.value) {
       throw new Error('NDK instance not initialized')
     }
     return instance.value
-  })
+  }
 
   // Actions
   async function initialize() {
@@ -62,7 +62,7 @@ export const useNDKStore = defineStore('ndk', () => {
     initialized,
     explicitRelayUrls,
     instance,
-    ndk,
+    getNDK,
     initialize,
     close
   }

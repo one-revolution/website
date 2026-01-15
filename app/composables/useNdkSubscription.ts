@@ -6,9 +6,7 @@ export const useNdkSubscription = () => {
   const ndkStore = useNDKStore()
 
   const subscribe = (kinds: NDKKind[], follows?: string[], options?: NDKSubscriptionOptions) => {
-    if (!ndkStore.instance) {
-      throw new Error('NDK instance not initialized')
-    }
+    const ndk = ndkStore.getNDK()
 
     const filter: NDKFilter = { kinds }
 
@@ -21,7 +19,7 @@ export const useNdkSubscription = () => {
       ...options
     }
 
-    return ndkStore.instance.subscribe(filter, mergedOptions)
+    return ndk.subscribe(filter, mergedOptions)
   }
 
   return {
