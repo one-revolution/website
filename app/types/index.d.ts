@@ -1,6 +1,13 @@
 import type { AvatarProps } from '@nuxt/ui'
 
 export type UserStatus = 'subscribed' | 'unsubscribed' | 'bounced'
+
+export const subscriptionOptions = {
+  closeOnEose: false,
+  groupable: false,
+  includeSelf: true
+}
+
 export interface Author {
   name: string
   avatar: string
