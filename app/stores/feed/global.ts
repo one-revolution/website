@@ -10,7 +10,6 @@ export const useGlobalFeedStore = defineStore('global-feed', () => {
   const { subscribe } = useNdkSubscription()
 
   const Articles = computed(() => {
-    console.log('Getter Articles accessed, count:', articles.value.length)
     return articles.value
   })
 
@@ -48,12 +47,9 @@ export const useGlobalFeedStore = defineStore('global-feed', () => {
   }
 
   function getFeed(follows?: string[]) {
-    console.log('--- FEED START ---')
-    console.log('Initiating feed subscription', { follows })
     const sub = subscribe([NDKKind.Article], follows)
 
     sub.on('event', (event: NDKEvent) => {
-      console.log('--- EVENT RECEIVED ---', event.id)
       const article = mapEventToArticle(event)
 
       const index = articles.value.findIndex(a => a.id === article.id)
