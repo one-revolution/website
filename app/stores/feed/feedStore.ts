@@ -17,7 +17,7 @@ export const useFeedStore = defineStore('feed-store', () => {
   function getFeed(follows?: string[]) {
     const sub = subscribe([NDKKind.Article], follows)
 
-    sub.on('event',  (event: NDKEvent) => {
+    sub.on('event', (event: NDKEvent) => {
       // 1. Check for duplicate event
       console.log('Received event:', event)
       if (articles.value.some(a => a.id === event.id)) {
@@ -25,19 +25,19 @@ export const useFeedStore = defineStore('feed-store', () => {
       }
 
       // 2. Check publishStatus
-      // @ts-ignore - publishStatus might not be in the NDKEvent type definition but is requested
+
       if (event.publishStatus !== 'success') {
         return
       }
 
       try {
         // 3. Get the author profile
-       // const profile = await event.author.fetchProfile()
+        // const profile = await event.author.fetchProfile()
         const author = event.author
 
         console.log(author.npub)
 
-       // if (!profile) return
+        // if (!profile) return
 
         // 4. Map to Article type
         const article = mapArticle(NDKArticle.from(event), {} as NDKUserProfile)
