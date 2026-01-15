@@ -1,16 +1,17 @@
 import { defineStore } from 'pinia'
-import { reactive, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { NDKKind } from '@nostr-dev-kit/ndk'
 import type { NDKEvent } from '@nostr-dev-kit/ndk'
 import type { Article, Author } from '~/types'
 import { useNdkSubscription } from '~/composables/useNdkSubscription'
 
 export const useGlobalFeedStore = defineStore('global-feed', () => {
-  const articlesMap = reactive(new Map<string, Article>())
+  const articles = ref<Article[]>([])
   const { subscribe } = useNdkSubscription()
 
   const Articles = computed(() => {
-    return Array.from(articlesMap.values())
+    console.log('Getter Articles accessed, count:', articles.value.length)
+    return articles.value
   })
 
   function mapEventToArticle(event: NDKEvent): Article {
@@ -47,26 +48,42 @@ export const useGlobalFeedStore = defineStore('global-feed', () => {
   }
 
   function getFeed(follows?: string[]) {
+    console.log('--- FEED START ---')
     console.log('Initiating feed subscription', { follows })
     const sub = subscribe([NDKKind.Article], follows)
 
     sub.on('event', (event: NDKEvent) => {
-      console.log('Received article event', event.id)
+      console.log('--- EVENT RECEIVED ---', event.id)
       const article = mapEventToArticle(event)
-      articlesMap.set(article.id, article)
+
+      const index = articles.value.findIndex(a => a.id === article.id)
+      if (index !== -1) {
+        const newArticles = [...articles.value]
+        newArticles[index] = article
+        articles.value = newArticles
+      } else {
+        articles.value = [...articles.value, article]
+      }
+
+      console.log('Current articles count:', articles.value.length)
 
       // Fetch profile asynchronously without blocking
       event.author.fetchProfile().then(() => {
-        console.log('Fetched profile for', event.pubkey)
+        console.log('--- PROFILE FETCHED ---', event.pubkey)
         const updatedArticle = mapEventToArticle(event)
-        articlesMap.set(updatedArticle.id, updatedArticle)
+        const uIndex = articles.value.findIndex(a => a.id === updatedArticle.id)
+        if (uIndex !== -1) {
+          const newArticles = [...articles.value]
+          newArticles[uIndex] = updatedArticle
+          articles.value = newArticles
+        }
       }).catch((err) => {
         console.error('Error fetching profile:', err)
       })
     })
 
     sub.on('eose', () => {
-      console.log('Subscription EOSE reached')
+      console.log('--- EOSE REACHED ---')
     })
 
     return sub

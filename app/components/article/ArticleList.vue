@@ -22,12 +22,12 @@ watch(selectedArticle, () => {
 </script>
 
 <template>
-  <div class="overflow-y-auto divide-y divide-default flex-1 h-full">
+  <div class="overflow-y-auto divide-y divide-default flex-1 h-full min-h-0">
     <div
       v-if="articles.length === 0"
       class="p-4 text-center text-dimmed"
     >
-      No articles found.
+      No articles found. (Count: {{ articles.length }})
     </div>
     <div
       v-for="article in articles"
@@ -51,18 +51,18 @@ watch(selectedArticle, () => {
               :alt="article.author.name || article.author.displayName"
               size="xs"
             />
-            <span class="font-medium">
+            <span class="font-medium text-foreground">
               {{ article.author?.name || article.author?.displayName || 'Anonymous' }}
             </span>
           </div>
 
-          <span>{{ isToday(new Date(article.date)) ? format(new Date(article.date), 'HH:mm') : format(new Date(article.date), 'dd MMM') }}</span>
+          <span class="text-dimmed">{{ isToday(new Date(article.date)) ? format(new Date(article.date), 'HH:mm') : format(new Date(article.date), 'dd MMM') }}</span>
         </div>
-        <p class="truncate font-semibold">
-          {{ article.title }}
+        <p class="truncate font-semibold text-foreground">
+          {{ article.title || '(No Title)' }}
         </p>
         <p class="text-dimmed line-clamp-1">
-          {{ article.summary }}
+          {{ article.summary || '(No Summary)' }}
         </p>
       </div>
     </div>
