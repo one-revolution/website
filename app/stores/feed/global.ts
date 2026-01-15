@@ -1,22 +1,25 @@
 import { defineStore } from 'pinia'
+import { reactive, computed } from 'vue'
 import { NDKKind } from '@nostr-dev-kit/ndk'
 import type { NDKEvent } from '@nostr-dev-kit/ndk'
 import type { Article, Author } from '~/types'
 import { useNdkSubscription } from '~/composables/useNdkSubscription'
 
 export const useGlobalFeedStore = defineStore('global-feed', () => {
-  const articlesMap = ref(new Map<string, Article>())
+  const articlesMap = reactive(new Map<string, Article>())
   const { subscribe } = useNdkSubscription()
 
-  const Articles = computed(() => new Set(articlesMap.value.values()))
+  const Articles = computed(() => {
+    return Array.from(articlesMap.values())
+  })
 
   function mapEventToArticle(event: NDKEvent): Article {
-    const title = event.getMatchingTags('title')[0]?.[1] || ''
-    const summary = event.getMatchingTags('summary')[0]?.[1] || ''
-    const image = event.getMatchingTags('image')[0]?.[1] || ''
-    const publishedAt = event.getMatchingTags('published_at')[0]?.[1]
-    const published = publishedAt ? new Date(Number.parseInt(publishedAt) * 1000) : new Date(event.created_at! * 1000)
-    const dTag = event.getMatchingTags('d')[0]?.[1] || event.id
+    const title = event.tagValue('title') || ''
+    const summary = event.tagValue('summary') || ''
+    const image = event.tagValue('image') || ''
+    const publishedAt = event.tagValue('published_at')
+    const published = publishedAt ? new Date(Number.parseInt(publishedAt) * 1000) : (event.created_at ? new Date(event.created_at * 1000) : new Date())
+    const dTag = event.tagValue('d') || event.id
 
     const author: Author = {
       name: event.author.profile?.name || '',
@@ -35,7 +38,7 @@ export const useGlobalFeedStore = defineStore('global-feed', () => {
       title,
       summary,
       content: event.content,
-      date: new Date(event.created_at! * 1000).toISOString(),
+      date: event.created_at ? new Date(event.created_at * 1000).toISOString() : new Date().toISOString(),
       image,
       tags: event.getMatchingTags('t').map(t => t[1] as string),
       published,
@@ -44,11 +47,26 @@ export const useGlobalFeedStore = defineStore('global-feed', () => {
   }
 
   function getFeed(follows?: string[]) {
+    console.log('Initiating feed subscription', { follows })
     const sub = subscribe([NDKKind.Article], follows)
 
     sub.on('event', (event: NDKEvent) => {
+      console.log('Received article event', event.id)
       const article = mapEventToArticle(event)
-      articlesMap.value.set(article.id, article)
+      articlesMap.set(article.id, article)
+
+      // Fetch profile asynchronously without blocking
+      event.author.fetchProfile().then(() => {
+        console.log('Fetched profile for', event.pubkey)
+        const updatedArticle = mapEventToArticle(event)
+        articlesMap.set(updatedArticle.id, updatedArticle)
+      }).catch((err) => {
+        console.error('Error fetching profile:', err)
+      })
+    })
+
+    sub.on('eose', () => {
+      console.log('Subscription EOSE reached')
     })
 
     return sub

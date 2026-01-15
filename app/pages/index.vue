@@ -1,45 +1,30 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { breakpointsTailwind } from '@vueuse/core'
-import type { Mail } from '~/types'
+import type { Article } from '~/types'
+import { useGlobalFeedStore } from '~/stores/feed/global'
+import { useNDKStore } from '~/stores/ndk'
 
-const tabItems = [{
-  label: 'All',
-  value: 'all'
-}, {
-  label: 'Unread',
-  value: 'unread'
-}]
-const selectedTab = ref('all')
+const feedStore = useGlobalFeedStore()
+const ndkStore = useNDKStore()
 
-const { data: mails } = await useFetch<Mail[]>('/api/mails', { default: () => [] })
-
-// Filter mails based on the selected tab
-const filteredMails = computed(() => {
-  if (selectedTab.value === 'unread') {
-    return mails.value.filter(mail => !!mail.unread)
-  }
-
-  return mails.value
+onMounted(async () => {
+  await ndkStore.initialize()
+  feedStore.getFeed()
 })
 
-const selectedMail = ref<Mail | null>()
+const articles = computed(() => feedStore.Articles)
 
-const isMailPanelOpen = computed({
+const selectedArticle = ref<Article | null>(null)
+
+const isArticlePanelOpen = computed({
   get() {
-    return !!selectedMail.value
+    return !!selectedArticle.value
   },
   set(value: boolean) {
     if (!value) {
-      selectedMail.value = null
+      selectedArticle.value = null
     }
-  }
-})
-
-// Reset selected mail if it's not in the filtered mails
-watch(filteredMails, () => {
-  if (!filteredMails.value.find(mail => mail.id === selectedMail.value?.id)) {
-    selectedMail.value = null
   }
 })
 
@@ -60,30 +45,21 @@ const isMobile = breakpoints.smaller('lg')
         <UDashboardSidebarCollapse />
       </template>
       <template #trailing>
-        <UBadge :label="filteredMails.length" variant="subtle" />
-      </template>
-
-      <template #right>
-        <UTabs
-          v-model="selectedTab"
-          :items="tabItems"
-          :content="false"
-          size="xs"
-        />
+        <UBadge :label="articles.length" variant="subtle" />
       </template>
     </UDashboardNavbar>
-    <InboxList v-model="selectedMail" :mails="filteredMails" />
+    <ArticleList v-model="selectedArticle" :articles="articles" />
   </UDashboardPanel>
 
-  <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+  <ArticleView v-if="selectedArticle" :article="selectedArticle" @close="selectedArticle = null" />
   <div v-else class="hidden lg:flex flex-1 items-center justify-center">
     <UIcon name="material-symbols:article-outline" class="size-32 text-dimmed" />
   </div>
 
   <ClientOnly>
-    <USlideover v-if="isMobile" v-model:open="isMailPanelOpen">
+    <USlideover v-if="isMobile" v-model:open="isArticlePanelOpen">
       <template #content>
-        <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+        <ArticleView v-if="selectedArticle" :article="selectedArticle" @close="selectedArticle = null" />
       </template>
     </USlideover>
   </ClientOnly>

@@ -16,7 +16,10 @@ export const useNdkSubscription = () => {
       filter.authors = follows
     }
 
-    const mergedOptions = { ...defaultOptions, ...options }
+    const mergedOptions = {
+      ...defaultOptions,
+      ...options
+    }
 
     return ndkStore.instance.subscribe(filter, mergedOptions)
   }

@@ -5,7 +5,9 @@ const CLIENT_NAME = 'one-revolution'
 const DEFAULT_EXPLICIT_RELAY_URLS = [
   'wss://relay.damus.io',
   'wss://relay.primal.net',
-  'wss://relay.threenine.services'
+  'wss://relay.threenine.services',
+  'wss://nos.lol',
+  'wss://relay.nostr.band'
 ]
 const DEFAULT_OUTBOX_RELAY_URLS = [
   'wss://purplepag.es',
@@ -38,9 +40,15 @@ export const useNDKStore = defineStore('ndk', () => {
   async function initialize() {
     if (instance.value) return
 
+    console.log('Initializing NDK...')
     const ndkInstance = createNdkInstance(explicitRelayUrls.value, DEFAULT_OUTBOX_RELAY_URLS)
 
-    await ndkInstance.connect()
+    try {
+      await ndkInstance.connect()
+      console.log('NDK connected successfully')
+    } catch (error) {
+      console.error('Failed to connect to NDK relays:', error)
+    }
 
     instance.value = ndkInstance
     initialized.value = true

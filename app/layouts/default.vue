@@ -8,7 +8,7 @@ const open = ref(false)
 
 const links = [[{
   label: 'Home',
-  icon: 'i-lucide-inbox',
+  icon: 'i-lucide-article',
   to: '/',
   badge: '4',
   onSelect: () => {
