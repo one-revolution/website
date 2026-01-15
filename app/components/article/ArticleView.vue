@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { format } from 'date-fns'
+import markdownit from 'markdown-it'
 import type { Article } from '~/types'
 
-defineProps<{
+const props = defineProps<{
   article: Article
 }>()
+
+const md = markdownit({
+  html: false,
+  linkify: true,
+  typographer: true
+})
+
+const renderedContent = computed(() => md.render(props.article.content))
 
 const emits = defineEmits(['close'])
 
@@ -105,9 +114,7 @@ function onSubmit() {
     </div>
 
     <div class="flex-1 p-4 sm:p-6 overflow-y-auto">
-      <div class="prose prose-sm dark:prose-invert max-w-none">
-        {{ article.content }}
-      </div>
+      <div class="prose prose-sm dark:prose-invert max-w-none" v-html="renderedContent" />
     </div>
 
     <div class="pb-4 px-4 sm:px-6 shrink-0">
