@@ -1,55 +1,49 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { NDKKind, NDKArticle } from '@nostr-dev-kit/ndk'
-import type { NDKEvent, NDKUserProfile } from '@nostr-dev-kit/ndk'
 import type { Article } from '~/types'
-import { useNdkSubscription } from '~/composables/useNdkSubscription'
 import { mapArticle } from '~/utils/nostr'
+import { useNostrStore } from '~/stores/nostr'
+import type { Filter, Event } from 'nostr-tools'
 
 export const useFeedStore = defineStore('feed-store', () => {
   const articles = ref<Article[]>([])
-  const { subscribe } = useNdkSubscription()
+  const nostrStore = useNostrStore()
+  const profiles = ref<Record<string, Record<string, string | number | boolean | null>>>({})
 
   const Articles = computed(() => {
     return articles.value
   })
 
   function getFeed(follows?: string[]) {
-    const sub = subscribe([NDKKind.Article], follows)
+    const filter: Filter = { kinds: [30023]}
+    if (follows && follows.length > 0) {
+      filter.authors = follows
+    }
 
-    sub.on('event', (event: NDKEvent) => {
-      // 1. Check for duplicate event
+    const sub = nostrStore.subscribe(filter, async (event: Event) => {
       console.log('Received event:', event)
       if (articles.value.some(a => a.id === event.id)) {
         return
       }
 
-      // 2. Check publishStatus
-
-      if (event.publishStatus !== 'success') {
-        return
+      // Fetch profile if not cached
+      if (!profiles.value[event.pubkey]) {
+        const profileEvents = await nostrStore.pool.querySync(nostrStore.relayUrls, {
+          kinds: [0],
+          authors: [event.pubkey]
+        })
+        if (profileEvents.length > 0 && profileEvents[0]) {
+          try {
+            profiles.value[event.pubkey] = JSON.parse(profileEvents[0].content)
+          } catch (e) {
+            console.error('Error parsing profile content', e)
+          }
+        }
       }
 
-      try {
-        // 3. Get the author profile
-        // const profile = await event.author.fetchProfile()
-        const author = event.author
-
-        console.log(author.npub)
-
-        // if (!profile) return
-
-        // 4. Map to Article type
-        const article = mapArticle(NDKArticle.from(event), {} as NDKUserProfile)
-
-        // Update articles list
-        articles.value = [...articles.value, article]
-      } catch (err) {
-        console.error('Error processing event:', err)
-      }
-    })
-
-    sub.on('eose', () => {
+      const article = mapArticle(event, profiles.value[event.pubkey])
+      articles.value = [...articles.value, article].sort((a, b) => b.published.getTime() - a.published.getTime())
+    }, () => {
       console.log('--- EOSE REACHED ---')
     })
 

@@ -4,7 +4,10 @@ export type UserStatus = 'subscribed' | 'unsubscribed' | 'bounced'
 
 export const subscriptionOptions = {
   closeOnEose: false,
-  groupable: false
+  groupable: false,
+  includeSelf: true,
+  includeReplies: true,
+  includeAuthors: true
 }
 
 export interface Author {

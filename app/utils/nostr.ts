@@ -1,54 +1,52 @@
-import type { NDKArticle, NDKUserProfile, NDKTag } from '@nostr-dev-kit/ndk'
+import type { Event } from 'nostr-tools'
 import type { Article, Author } from '~/types'
 
-export function mapArticle(event: NDKArticle, profile: NDKUserProfile): Article {
-  const tags = event.tags as NDKTag[]
-
+export function mapArticle(event: Event, profile: Record<string, string | number | boolean | null> | undefined): Article {
   return {
     id: event.id,
     pubkey: event.pubkey,
-    title: getTitleFromTags(tags) || '',
-    summary: getSummaryFromTags(tags) || '',
+    title: getTitleFromTags(event.tags) || '',
+    summary: getSummaryFromTags(event.tags) || '',
     content: event.content || '',
     date: event.created_at ? new Date(event.created_at * 1000).toISOString() : '',
-    image: getImageFromTags(tags) || '',
-    tags: getTopicTagsFromTags(event) || [],
+    image: getImageFromTags(event.tags) || '',
+    tags: getTopicTagsFromTags(event.tags) || [],
     published: event.created_at ? new Date(event.created_at * 1000) : new Date(),
     author: mapAuthor(profile)
   }
 }
 
-export function mapAuthor(profile: NDKUserProfile): Author {
+export function mapAuthor(profile: Record<string, string | number | boolean | null> | undefined): Author {
   return {
-    name: profile.name || '',
-    avatar: profile.image || '',
-    npub: String(profile.npub || ''),
-    displayName: profile.displayName || '',
-    lightning: profile.lud16 || '',
-    lnUrl: String(profile.lnurl || ''),
-    website: getWebsiteLink(profile.website),
-    about: profile.about || ''
+    name: String(profile?.name || ''),
+    avatar: String(profile?.image || profile?.picture || ''),
+    npub: '', // We can compute this if needed, but it was String(profile.npub) before
+    displayName: String(profile?.displayName || profile?.display_name || ''),
+    lightning: String(profile?.lud16 || ''),
+    lnUrl: String(profile?.lnurl || ''),
+    website: getWebsiteLink(String(profile?.website || '')),
+    about: String(profile?.about || '')
   }
 }
 
-function getTitleFromTags(tags: NDKTag[]): string {
+function getTitleFromTags(tags: string[][]): string {
   const titleTag = tags.find(tag => tag[0] === 'title')
   return titleTag?.[1] || ''
 }
 
-function getImageFromTags(tags: NDKTag[]): string {
+function getImageFromTags(tags: string[][]): string {
   const imageTag = tags.find(tag => tag[0] === 'image')
   return imageTag?.[1] || ''
 }
 
-function getSummaryFromTags(tags: NDKTag[]): string {
+function getSummaryFromTags(tags: string[][]): string {
   const summaryTag = tags.find(tag => tag[0] === 'summary')
   return summaryTag?.[1] || ''
 }
 
-function getTopicTagsFromTags(article: NDKArticle): string[] {
-  const articleTags = article.getMatchingTags('t')
-  return articleTags
+function getTopicTagsFromTags(tags: string[][]): string[] {
+  return tags
+    .filter(tag => tag[0] === 't')
     .map(tag => tag[1]?.toLowerCase() as string)
     .filter(Boolean)
 }
