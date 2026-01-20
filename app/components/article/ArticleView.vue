@@ -1,20 +1,10 @@
 <script setup lang="ts">
 import { format } from 'date-fns'
-import { marked } from 'marked'
-import DOMPurify from 'dompurify'
 import type { Article } from '~/types'
 
 const props = defineProps<{
   article: Article
 }>()
-
-const renderedContent = computed(() => {
-  const rawHtml = marked.parse(props.article.content) as string
-  if (import.meta.server) {
-    return rawHtml
-  }
-  return DOMPurify.sanitize(rawHtml)
-})
 
 const emits = defineEmits(['close'])
 
@@ -116,10 +106,7 @@ function onSubmit() {
     </div>
 
     <div class="flex-1 p-4 sm:p-6 overflow-y-auto">
-      <div
-        class="prose prose-md dark:prose-invert max-w-none prose-headings:text-highlighted prose-p:text-foreground prose-a:text-primary hover:prose-a:text-primary/80"
-        v-html="renderedContent"
-      />
+      <MDC :value="props.article.content" />
     </div>
 
     <div class="pb-4 px-4 sm:px-6 shrink-0">
