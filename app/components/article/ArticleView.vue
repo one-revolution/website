@@ -105,8 +105,8 @@ function onSubmit() {
           <p class="font-semibold text-highlighted">
             {{ article.author.name || article.author.displayName || 'Anonymous' }}
           </p>
-          <p class="text-muted">
-            {{ article.author.npub }}
+          <p class="text-muted text-sm line-clamp-1">
+            {{ article.author.about }}
           </p>
         </div>
       </div>
