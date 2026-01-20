@@ -98,8 +98,7 @@ function onSubmit() {
           :src="article.author.avatar"
           :alt="article.author.name || article.author.displayName"
           class="w-10 h-10 rounded-full"
-
-        />
+        >
 
         <div class="min-w-0">
           <p class="font-semibold text-highlighted">

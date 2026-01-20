@@ -50,7 +50,7 @@ watch(selectedArticle, () => {
               :src="article.author.avatar"
               :alt="article.author.name || article.author.displayName"
               class="w-6 h-6 rounded-full"
-            />
+            >
             <span class="font-medium text-foreground">
               {{ article.author?.name || article.author?.displayName || 'Anonymous' }}
             </span>

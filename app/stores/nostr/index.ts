@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Event, Filter } from 'nostr-tools'
-import { SimplePool, validateEvent } from 'nostr-tools'
+import { SimplePool, verifyEvent, type Event, type Filter } from 'nostr-tools'
 
 export const useNostrStore = defineStore('nostr', () => {
   const config = useRuntimeConfig()
@@ -10,14 +9,13 @@ export const useNostrStore = defineStore('nostr', () => {
 
   async function initialize() {
     if (initialized.value) return
-    console.log('Initializing Nostr pool...')
     initialized.value = true
   }
 
   function subscribe(filter: Filter, onEvent: (event: Event) => void, onEose?: () => void) {
     return pool.subscribeMany(relayUrls.value, filter, {
       onevent(event: Event) {
-        if (validateEvent(event)) {
+        if (verifyEvent(event)) {
           onEvent(event)
         }
       },
