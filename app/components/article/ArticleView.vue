@@ -106,7 +106,7 @@ function onSubmit() {
     </div>
 
     <div class="flex-1 p-4 sm:p-6 overflow-y-auto">
-      <MDC :value="props.article.content" />
+      <MDC :value="props.article.content" tag="article" />
     </div>
 
     <div class="pb-4 px-4 sm:px-6 shrink-0">

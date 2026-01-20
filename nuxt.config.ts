@@ -19,8 +19,7 @@ export default defineNuxtConfig({
       DEFAULT_RELAY_URLS: [
         'wss://relay.damus.io',
         'wss://relay.primal.net',
-        'wss://relay.threenine.services',
-        'wss://relay.snort.social'
+        'wss://relay.threenine.services'
       ]
     }
   },
