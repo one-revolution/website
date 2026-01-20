@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia'
-import { SimplePool } from 'nostr-tools'
-import type { Filter, Event } from 'nostr-tools'
+import {defineStore} from 'pinia'
+import type {Event, Filter} from 'nostr-tools'
+import {SimplePool, validateEvent} from 'nostr-tools'
 
 const DEFAULT_RELAY_URLS = [
   'wss://relay.damus.io',
@@ -21,15 +21,16 @@ export const useNostrStore = defineStore('nostr', () => {
 
   function subscribe(filter: Filter, onEvent: (event: Event) => void, onEose?: () => void) {
     // @ts-expect-error - subscribeMany might have slightly different signature in some versions of nostr-tools
-    const sub = pool.subscribeMany(relayUrls.value, filter, {
+    return pool.subscribeMany(relayUrls.value, filter, {
       onevent(event: Event) {
-        onEvent(event)
+        if (validateEvent(event)) {
+          onEvent(event)
+        }
       },
       oneose() {
         if (onEose) onEose()
       }
     })
-    return sub
   }
 
   async function close() {

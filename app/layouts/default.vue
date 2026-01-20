@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 
-const toast = useToast()
-
 const open = ref(false)
 
 const links = [[{
@@ -63,7 +61,6 @@ const links = [[{
   to: 'https://github.com/nuxt-ui-templates/dashboard',
   target: '_blank'
 }]] satisfies NavigationMenuItem[][]
-
 </script>
 
 <template>

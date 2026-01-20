@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-import type { Article } from '~/types'
-import { mapArticle } from '~/utils/nostr'
-import { useNostrStore } from '~/stores/nostr'
-import type { Filter, Event } from 'nostr-tools'
+import {defineStore} from 'pinia'
+import {computed, ref} from 'vue'
+import type {Article} from '~/types'
+import {mapArticle} from '~/utils/nostr'
+import {useNostrStore} from '~/stores/nostr'
+import type {Event, Filter} from 'nostr-tools'
 
 export const useFeedStore = defineStore('feed-store', () => {
   const articles = ref<Article[]>([])
@@ -15,12 +15,12 @@ export const useFeedStore = defineStore('feed-store', () => {
   })
 
   function getFeed(follows?: string[]) {
-    const filter: Filter = { kinds: [30023]}
+    const filter: Filter = { kinds: [30023] }
     if (follows && follows.length > 0) {
       filter.authors = follows
     }
 
-    const sub = nostrStore.subscribe(filter, async (event: Event) => {
+    return nostrStore.subscribe(filter, async (event: Event) => {
       console.log('Received event:', event)
       if (articles.value.some(a => a.id === event.id)) {
         return
@@ -46,8 +46,6 @@ export const useFeedStore = defineStore('feed-store', () => {
     }, () => {
       console.log('--- EOSE REACHED ---')
     })
-
-    return sub
   }
 
   return {
