@@ -7,12 +7,38 @@ import type { Event, Filter } from 'nostr-tools'
 
 export const useFeedStore = defineStore('feed-store', () => {
   const articles = ref<Article[]>([])
-  const nostrStore = useNostrStore()
+  const store = useNostrStore()
   const profiles = ref<Author[]>([])
 
   const Articles = computed(() => {
     return articles.value
   })
+
+  async function fetchProfile(pubkey: string): Promise<Author> {
+    // Fetch profile if not cached
+    let author = profiles.value.find(p => p.pubkey === pubkey)
+    if (author) {
+      return author
+    }
+
+    const profileEvents = await store.pool.querySync(store.relayUrls, {
+      kinds: [0],
+      authors: [pubkey]
+    })
+
+    let profileData: Record<string, string | number | boolean | null> | undefined
+    if (profileEvents.length > 0 && profileEvents[0]) {
+      try {
+        profileData = JSON.parse(profileEvents[0].content)
+      } catch (e) {
+        console.error('Error parsing profile content', e)
+      }
+    }
+
+    author = mapAuthor(pubkey, profileData)
+    profiles.value.push(author)
+    return author
+  }
 
   function getFeed(follows?: string[]) {
     const filter: Filter = { kinds: [30023] }
@@ -20,31 +46,12 @@ export const useFeedStore = defineStore('feed-store', () => {
       filter.authors = follows
     }
 
-    return nostrStore.subscribe(filter, async (event: Event) => {
+    return store.subscribe(filter, async (event: Event) => {
       if (articles.value.some(a => a.id === event.id)) {
         return
       }
 
-      // Fetch profile if not cached
-      let author = profiles.value.find(p => p.pubkey === event.pubkey)
-      if (!author) {
-        const profileEvents = await nostrStore.pool.querySync(nostrStore.relayUrls, {
-          kinds: [0],
-          authors: [event.pubkey]
-        })
-        let profileData: Record<string, string | number | boolean | null> | undefined
-        if (profileEvents.length > 0 && profileEvents[0]) {
-          try {
-            console.log('Parsing profile content:', profileEvents[0].content)
-            profileData = JSON.parse(profileEvents[0].content)
-          } catch (e) {
-            console.error('Error parsing profile content', e)
-          }
-        }
-        author = mapAuthor(event.pubkey, profileData)
-        profiles.value.push(author)
-      }
-
+      const author = await fetchProfile(event.pubkey)
       const article = mapArticle(event, author)
       articles.value = [...articles.value, article].sort((a, b) => b.published.getTime() - a.published.getTime())
     }, () => {
