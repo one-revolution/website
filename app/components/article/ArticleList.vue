@@ -45,11 +45,11 @@ watch(selectedArticle, () => {
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <UAvatar
+            <img
               v-if="article.author?.avatar"
               :src="article.author.avatar"
               :alt="article.author.name || article.author.displayName"
-              size="xs"
+              class="w-6 h-6 rounded-full"
             />
             <span class="font-medium text-foreground">
               {{ article.author?.name || article.author?.displayName || 'Anonymous' }}

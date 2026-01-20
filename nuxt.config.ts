@@ -7,6 +7,15 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+  runtimeConfig: {
+    public: {
+      DEFAULT_RELAY_URLS: [
+        'wss://relay.damus.io',
+        'wss://relay.primal.net',
+        'wss://relay.threenine.services'
+      ]
+    }
+  },
 
   routeRules: {
     '/api/**': {

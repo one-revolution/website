@@ -1,7 +1,7 @@
 import type { Event } from 'nostr-tools'
 import type { Article, Author } from '~/types'
 
-export function mapArticle(event: Event, profile: Record<string, string | number | boolean | null> | undefined): Article {
+export function mapArticle(event: Event, author: Author): Article {
   return {
     id: event.id,
     pubkey: event.pubkey,
@@ -12,14 +12,15 @@ export function mapArticle(event: Event, profile: Record<string, string | number
     image: getImageFromTags(event.tags) || '',
     tags: getTopicTagsFromTags(event.tags) || [],
     published: event.created_at ? new Date(event.created_at * 1000) : new Date(),
-    author: mapAuthor(profile)
+    author
   }
 }
 
-export function mapAuthor(profile: Record<string, string | number | boolean | null> | undefined): Author {
+export function mapAuthor(pubkey: string, profile: Record<string, string | number | boolean | null> | undefined): Author {
   return {
+    pubkey,
     name: String(profile?.name || ''),
-    avatar: String(profile?.image || profile?.picture || ''),
+    avatar: String(profile?.picture || ''),
     npub: '', // We can compute this if needed, but it was String(profile.npub) before
     displayName: String(profile?.displayName || profile?.display_name || ''),
     lightning: String(profile?.lud16 || ''),

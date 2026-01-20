@@ -93,10 +93,12 @@ function onSubmit() {
 
     <div class="flex flex-col sm:flex-row justify-between gap-1 p-4 sm:px-6 border-b border-default">
       <div class="flex items-start gap-4 sm:my-1.5">
-        <UAvatar
+        <img
+          v-if="article.author?.avatar"
           :src="article.author.avatar"
           :alt="article.author.name || article.author.displayName"
-          size="3xl"
+          class="w-10 h-10 rounded-full"
+
         />
 
         <div class="min-w-0">

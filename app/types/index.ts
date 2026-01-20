@@ -11,6 +11,7 @@ export const subscriptionOptions = {
 }
 
 export interface Author {
+  pubkey: string
   name: string
   avatar: string
   npub: string
