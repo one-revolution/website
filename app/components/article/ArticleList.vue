@@ -8,7 +8,11 @@ defineProps<{
 
 const articlesRefs = ref<Record<string, Element>>({})
 
-const selectedArticle = defineModel<Article | null>()
+const selectedArticle = defineModel<Article | undefined>()
+
+const selectArticle = (article: Article) => {
+  selectedArticle.value = article
+}
 
 watch(selectedArticle, () => {
   if (!selectedArticle.value) {
@@ -41,7 +45,7 @@ watch(selectedArticle, () => {
             ? 'border-primary bg-primary/10'
             : 'border-transparent hover:border-primary hover:bg-primary/5'
         ]"
-        @click="selectedArticle = article"
+        @click="selectArticle(article)"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">

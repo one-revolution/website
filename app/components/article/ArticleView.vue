@@ -59,16 +59,16 @@ function onSubmit() {
       </template>
 
       <template #right>
-        <UTooltip text="Archive">
+        <UTooltip text="Bookmark">
           <UButton
-            icon="i-lucide-inbox"
+            icon="material-symbols:bookmark-add"
             color="neutral"
             variant="ghost"
           />
         </UTooltip>
 
-        <UTooltip text="Reply">
-          <UButton icon="i-lucide-reply" color="neutral" variant="ghost" />
+        <UTooltip text="Comments">
+          <UButton icon="mdi:comment-text-multiple-outline" color="neutral" variant="ghost" />
         </UTooltip>
 
         <UDropdownMenu :items="dropdownItems">
@@ -112,10 +112,10 @@ function onSubmit() {
     <div class="pb-4 px-4 sm:px-6 shrink-0">
       <UCard variant="subtle" class="mt-auto" :ui="{ header: 'flex items-center gap-1.5 text-dimmed' }">
         <template #header>
-          <UIcon name="i-lucide-reply" class="size-5" />
+          <UIcon name="material-symbols:add-comment-outline" class="size-5" />
 
           <span class="text-sm truncate">
-            Reply to {{ article.author.name || article.author.displayName || 'Anonymous' }}
+            {{ article.title }}
           </span>
         </template>
 
@@ -126,34 +126,21 @@ function onSubmit() {
             variant="none"
             required
             autoresize
-            placeholder="Write your reply..."
+            placeholder="Have your say..."
             :rows="4"
             :disabled="loading"
             class="w-full"
             :ui="{ base: 'p-0 resize-none' }"
           />
 
-          <div class="flex items-center justify-between">
-            <UTooltip text="Attach file">
-              <UButton
-                color="neutral"
-                variant="ghost"
-                icon="i-lucide-paperclip"
-              />
-            </UTooltip>
-
+          <div class="flex items-center justify-end">
             <div class="flex items-center justify-end gap-2">
               <UButton
-                color="neutral"
-                variant="ghost"
-                label="Save draft"
-              />
-              <UButton
                 type="submit"
-                color="neutral"
+                color="primary"
                 :loading="loading"
-                label="Send"
-                icon="i-lucide-send"
+                label="Post"
+                icon="material-symbols:add-comment-outline"
               />
             </div>
           </div>
