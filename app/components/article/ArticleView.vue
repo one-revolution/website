@@ -84,15 +84,15 @@ function onSubmit() {
     <div class="flex flex-col sm:flex-row justify-between gap-1 p-4 sm:px-6 border-b border-default">
       <div class="flex items-start gap-4 sm:my-1.5">
         <img
-          v-if="article.author?.avatar"
-          :src="article.author.avatar"
-          :alt="article.author.name || article.author.displayName"
+          v-if="article.author?.image"
+          :src="article.author.image"
+          :alt="article.author.name || article.author.display_name"
           class="w-10 h-10 rounded-full"
         >
 
         <div class="min-w-0">
           <p class="font-semibold text-highlighted">
-            {{ article.author.name || article.author.displayName || 'Anonymous' }}
+            <span>{{ article.author.name || article.author.display_name || 'Anonymous' }}</span> <span class="text-muted text-xs italic">{{ article.author.npub }}</span>
           </p>
           <p class="text-muted text-sm line-clamp-1">
             {{ article.author.about }}

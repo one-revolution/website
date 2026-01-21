@@ -1,7 +1,8 @@
 import type { Event } from 'nostr-tools'
-import type { Article, Author } from '~/types'
+import type { Article, Profile } from '~/types'
+import * as nip19 from 'nostr-tools/nip19'
 
-export function mapArticle(event: Event, author: Author): Article {
+export function mapArticle(event: Event, author: Profile): Article {
   return {
     id: event.id,
     pubkey: event.pubkey,
@@ -16,17 +17,18 @@ export function mapArticle(event: Event, author: Author): Article {
   }
 }
 
-export function mapAuthor(pubkey: string, profile: Record<string, string | number | boolean | null> | undefined): Author {
+export function mapAuthor(pubkey: string, profile: Record<string, string | number | boolean | null> | undefined): Profile {
   return {
     pubkey,
     name: String(profile?.name || ''),
-    avatar: String(profile?.picture || ''),
-    npub: '', // We can compute this if needed, but it was String(profile.npub) before
-    displayName: String(profile?.displayName || profile?.display_name || ''),
-    lightning: String(profile?.lud16 || ''),
-    lnUrl: String(profile?.lnurl || ''),
+    image: String(profile?.picture || ''),
+    display_name: String(profile?.displayName || profile?.display_name || profile?.name),
+    lud16: String(profile?.lud16 || ''),
+    nip05: String(profile?.nip05 || ''),
     website: getWebsiteLink(String(profile?.website || '')),
-    about: String(profile?.about || '')
+    about: String(profile?.about || ''),
+    bot: Boolean(profile?.bot || false),
+    npub: nip19.npubEncode(pubkey)
   }
 }
 

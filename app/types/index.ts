@@ -21,6 +21,27 @@ export interface Author {
   website: string
   about: string
 }
+export type Comment = {
+  id: string
+  pubkey: string
+  created_at: number
+  content: string
+  profile?: Profile
+}
+
+export type Profile = {
+  pubkey: string
+  name?: string
+  display_name?: string
+  about?: string
+  image?: string
+  nip05?: string
+  lud16?: string
+  website?: string
+  banner?: string
+  bot: boolean
+  npub: string
+}
 export interface Article {
   id: string
   pubkey: string
@@ -31,7 +52,7 @@ export interface Article {
   image: string
   tags: string[]
   published: Date
-  author: Author
+  author: Profile
 }
 
 export interface User {

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import type { Article, Author } from '~/types'
+import type { Article, Profile } from '~/types'
 import { mapArticle, mapAuthor } from '~/utils/nostr'
 import { useNostrStore } from '~/stores/nostr'
 import type { Event, Filter } from 'nostr-tools'
@@ -8,13 +8,13 @@ import type { Event, Filter } from 'nostr-tools'
 export const useFeedStore = defineStore('feed-store', () => {
   const articles = ref<Article[]>([])
   const store = useNostrStore()
-  const profiles = ref<Author[]>([])
+  const profiles = ref<Profile[]>([])
 
   const Articles = computed(() => {
     return articles.value
   })
 
-  async function fetchProfile(pubkey: string): Promise<Author> {
+  async function fetchProfile(pubkey: string): Promise<Profile> {
     // Fetch profile if not cached
     let author = profiles.value.find(p => p.pubkey === pubkey)
     if (author) {

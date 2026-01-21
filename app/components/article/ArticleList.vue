@@ -50,9 +50,9 @@ watch(selectedArticle, () => {
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <img
-              v-if="article.author?.avatar"
-              :src="article.author.avatar"
-              :alt="article.author.name || article.author.displayName"
+              v-if="article.author?.image"
+              :src="article.author.image"
+              :alt="article.author.name || article.author.display_name || 'Anonymous'"
               class="w-6 h-6 rounded-full"
             >
             <span class="font-medium text-foreground">
