@@ -9,6 +9,9 @@ export interface UserProfile {
   picture?: string
   about?: string
   nip05?: string
+  lud16?: string
+  website?: string
+  banner?: string
 }
 
 export const useUserStore = defineStore('user', () => {
@@ -68,7 +71,10 @@ export const useUserStore = defineStore('user', () => {
             display_name: content.display_name,
             picture: content.picture,
             about: content.about,
-            nip05: content.nip05
+            nip05: content.nip05,
+            lud16: content.lud16,
+            website: content.website,
+            banner: content.banner
           }
         } catch (e) {
           console.error('Failed to parse profile content', e)
