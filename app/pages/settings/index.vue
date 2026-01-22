@@ -56,7 +56,7 @@ function onFileClick() {
   >
     <UPageCard
       title="Profile"
-      description="These informations will be displayed publicly."
+      description="Publicl information you would like to share."
       variant="naked"
       orientation="horizontal"
       class="mb-4"

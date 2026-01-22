@@ -92,7 +92,7 @@ function onSubmit() {
 
         <div class="min-w-0">
           <p class="font-semibold text-highlighted">
-            <span>{{ article.author.name || article.author.display_name || 'Anonymous' }}</span> <span class="text-muted text-xs italic">{{ article.author.npub }}</span>
+            <span>{{ article.author.display_name || 'Anonymous' }}</span> <span class="text-muted text-xs italic">{{ article.author.npub }}</span>
           </p>
           <p class="text-muted text-sm line-clamp-1">
             {{ article.author.about }}

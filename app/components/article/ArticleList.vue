@@ -56,7 +56,7 @@ watch(selectedArticle, () => {
               class="w-6 h-6 rounded-full"
             >
             <span class="font-medium text-foreground">
-              {{ article.author?.name || article.author?.displayName || 'Anonymous' }}
+              {{ article.author?.display_name || article.author?.name || 'Anonymous' }}
             </span>
           </div>
 

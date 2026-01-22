@@ -16,7 +16,7 @@ const filteredMembers = computed(() => {
   <div>
     <UPageCard
       title="Members"
-      description="Invite new members by email address."
+      description="Icunts"
       variant="naked"
       orientation="horizontal"
       class="mb-4"
