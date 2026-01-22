@@ -95,7 +95,17 @@ const items = computed<DropdownMenuItem[][]>(() => {
         trailingIcon: 'text-dimmed'
       }"
       @click="!userStore.isAuthenticated && userStore.login()"
-    />
+    >
+      <template #leading>
+        <SmartAvatar
+          v-if="userStore.isAuthenticated"
+          :src="user.avatar.src"
+          :alt="user.avatar.alt"
+          :size="24"
+          class="shrink-0"
+        />
+      </template>
+    </UButton>
 
     <template #chip-leading="{ item }: { item: DropdownMenuItem & { chip?: string } }">
       <div class="inline-flex items-center justify-center shrink-0 size-5">

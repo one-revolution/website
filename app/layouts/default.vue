@@ -13,7 +13,6 @@ const links = [[{
   label: 'Home',
   icon: 'material-symbols:article-outline',
   to: '/',
-  badge: '4',
   onSelect: () => {
     open.value = false
   }
