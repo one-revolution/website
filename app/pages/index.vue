@@ -15,7 +15,7 @@ onMounted(async () => {
 
 const articles = computed(() => feedStore.Articles)
 
-const selectedArticle = ref<Article | null>(null)
+const selectedArticle = ref<Article | undefined>(undefined)
 
 const isArticlePanelOpen = computed({
   get() {
@@ -23,7 +23,7 @@ const isArticlePanelOpen = computed({
   },
   set(value: boolean) {
     if (!value) {
-      selectedArticle.value = null
+      selectedArticle.value = undefined
     }
   }
 })
@@ -51,7 +51,7 @@ const isMobile = breakpoints.smaller('lg')
     <ArticleList v-model="selectedArticle" :articles="articles" />
   </UDashboardPanel>
 
-  <ArticleView v-if="selectedArticle" :article="selectedArticle" @close="selectedArticle = null" />
+  <ArticleView v-if="selectedArticle" :article="selectedArticle" @close="selectedArticle = undefined" />
   <div v-else class="hidden lg:flex flex-1 items-center justify-center">
     <UIcon name="material-symbols:article-outline" class="size-32 text-dimmed" />
   </div>
@@ -59,7 +59,7 @@ const isMobile = breakpoints.smaller('lg')
   <ClientOnly>
     <USlideover v-if="isMobile" v-model:open="isArticlePanelOpen">
       <template #content>
-        <ArticleView v-if="selectedArticle" :article="selectedArticle" @close="selectedArticle = null" />
+        <ArticleView v-if="selectedArticle" :article="selectedArticle" @close="selectedArticle = undefined" />
       </template>
     </USlideover>
   </ClientOnly>

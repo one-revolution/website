@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+import { useNostrStore } from '~/stores/nostr'
+
+const nostrStore = useNostrStore()
+onMounted(() => {
+  nostrStore.initialize()
+})
 
 const open = ref(false)
 
