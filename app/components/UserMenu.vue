@@ -78,6 +78,17 @@ const items = computed<DropdownMenuItem[][]>(() => {
     :content="{ align: 'center', collisionPadding: 12 }"
     :ui="{ content: collapsed ? 'w-48' : 'w-(--reka-dropdown-menu-trigger-width)' }"
   >
+    <template #item="{ item }">
+      <div v-if="item.type === 'label'" class="flex items-center gap-2 px-2 py-1.5">
+        <SmartAvatar :src="item.avatar?.src" :alt="item.avatar?.alt" :size="20" />
+        <span class="text-sm font-medium truncate">{{ item.label }}</span>
+      </div>
+
+      <div v-else>
+        <!-- fall back to default rendering or your own -->
+        <icon :name="item.icon" /> {{ item.label }}
+      </div>
+    </template>
     <UButton
       v-bind="{
         ...user,
