@@ -31,7 +31,42 @@ watch(selectedArticle, () => {
       v-if="articles.length === 0"
       class="p-4 text-center text-dimmed"
     >
-      No articles found. (Count: {{ articles.length }})
+      <u-card variant="subtle" class="shrink-0 mt-1">
+        <div class="flex items-center justify-center h-12">
+          <u-skeleton class=" h-4 w-5 rounded-full mr-3" /> <u-skeleton class="h-3 w-96 rounded" />
+        </div>
+        <div class="mt-1">
+          <u-skeleton class="h-2 w-96 rounded" />
+        </div>
+        <div class="mt-1">
+          <u-skeleton class="h-1 w-96 rounded" />
+          <u-skeleton class="h-1 w-96 rounded" />
+        </div>
+      </u-card>
+      <u-card variant="subtle" class="shrink-0 mt-3">
+        <div class="flex items-center justify-center h-12">
+          <u-skeleton class=" h-4 w-5 rounded-full mr-3" /> <u-skeleton class="h-3 w-96 rounded" />
+        </div>
+        <div class="mt-1">
+          <u-skeleton class="h-2 w-96 rounded" />
+        </div>
+        <div class="mt-1">
+          <u-skeleton class="h-1 w-96 rounded" />
+          <u-skeleton class="h-1 w-96 rounded" />
+        </div>
+      </u-card>
+      <u-card variant="subtle" class="shrink-0 mt-3">
+        <div class="flex items-center justify-center h-12">
+          <u-skeleton class=" h-4 w-5 rounded-full mr-3" /> <u-skeleton class="h-3 w-96 rounded" />
+        </div>
+        <div class="mt-1">
+          <u-skeleton class="h-2 w-96 rounded" />
+        </div>
+        <div class="mt-1">
+          <u-skeleton class="h-1 w-96 rounded" />
+          <u-skeleton class="h-1 w-96 rounded" />
+        </div>
+      </u-card>
     </div>
     <div
       v-for="article in articles"
