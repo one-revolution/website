@@ -1,11 +1,10 @@
 <script setup lang="ts">
 const colorMode = useColorMode()
 
-const color = computed(() => colorMode.value === 'dark' ? '#1b1718' : 'white')
+const color = computed(() => colorMode.value === 'dark' ? '#171717' : 'white')
 
 useHead({
   meta: [
-    { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
@@ -17,26 +16,21 @@ useHead({
   }
 })
 
-const title = 'One Revolution'
-const description = ''
-
 useSeoMeta({
-  title,
-  description,
-  ogTitle: title,
-  ogDescription: description,
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/dashboard-light.png',
-  twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/dashboard-light.png',
+  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/landing-light.png',
+  twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/landing-light.png',
   twitterCard: 'summary_large_image'
 })
 </script>
 
 <template>
-  <UApp>
-    <NuxtLoadingIndicator />
+  <UApp :toaster="{ expand: false }">
+    <AppHeader />
 
-    <NuxtLayout>
+    <UMain>
       <NuxtPage />
-    </NuxtLayout>
+    </UMain>
+
+    <AppFooter />
   </UApp>
 </template>

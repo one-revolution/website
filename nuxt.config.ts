@@ -2,11 +2,9 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
-    '@nuxt/ui',
-    '@vueuse/nuxt',
     '@nuxt/image',
-    '@pinia/nuxt',
-    '@nuxtjs/mdc'
+    '@nuxt/ui',
+    '@nuxt/content'
   ],
 
   devtools: {
@@ -14,27 +12,22 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
-  runtimeConfig: {
-    public: {
-      DEFAULT_RELAY_URLS: [
-        'wss://relay.damus.io',
-        'wss://relay.primal.net',
-        'wss://relay.threenine.services',
-        'wss://relay.nos.social',
-        'wss://relay.nostr.band',
-        'wss://relay.snort.social',
-        'wss://purplepag.es'
+
+  mdc: {
+    highlight: {
+      noApiRoute: false
+    }
+  },
+
+  compatibilityDate: '2025-01-15',
+
+  nitro: {
+    prerender: {
+      routes: [
+        '/'
       ]
     }
   },
-
-  routeRules: {
-    '/api/**': {
-      cors: true
-    }
-  },
-
-  compatibilityDate: '2024-07-11',
 
   eslint: {
     config: {
@@ -44,10 +37,5 @@ export default defineNuxtConfig({
       }
     }
   },
-  image: {
-    provider: 'cloudinary',
-    cloudinary: {
-      baseURL: 'https://res.cloudinary.com/threenine-co-uk/image/upload/'
-    }
-  }
+
 })
