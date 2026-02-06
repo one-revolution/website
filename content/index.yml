@@ -1,7 +1,7 @@
 seo:
   title: One Revolution
   description: Decentralized social media powered by you for you.
-title: One Revolution
+title: 'One [Revolution]{.text-primary}'
 description: Decentralized social media powered by you for you.
 hero:
   links:
@@ -21,7 +21,7 @@ hero:
       to: https://one-revolution.news
       target: _blank
 section:
-  title: '[Revolutionize]{.text-primary} your coding experience'
+  title: '[Revolutionize]{.text-primary} your social media experience'
   description: Transform your development workflow with AI-powered insights and personalized productivity optimization.
   images:
     mobile: '/images/macbook-mobile.svg'
