@@ -13,7 +13,7 @@ title = "One revolution Website Netlify Configuration File"
 
 
 [build.environment]
-    NODE_VERSION = "24.11.1"
+    NODE_VERSION = "25"
     NODE_OPTIONS = "--max-old-space-size=4096"
 
 

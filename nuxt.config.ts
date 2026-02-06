@@ -12,7 +12,9 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
-
+  content: {
+    experimental: { nativeSqlite: true }
+  },
   mdc: {
     highlight: {
       noApiRoute: false
@@ -37,5 +39,9 @@ export default defineNuxtConfig({
       }
     }
   },
+
+  future: {
+    compatibilityVersion: 4
+  }
 
 })
