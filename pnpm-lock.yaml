@@ -33,6 +33,12 @@ importers:
         specifier: ^4.1.18
         version: 4.1.18
     devDependencies:
+      '@iconify-json/material-symbols':
+        specifier: ^1.2.54
+        version: 1.2.54
+      '@iconify-json/streamline-ultimate':
+        specifier: ^1.2.2
+        version: 1.2.2
       '@nuxt/eslint':
         specifier: ^1.13.0
         version: 1.13.0(@typescript-eslint/utils@8.53.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(@vue/compiler-sfc@3.5.27)(eslint@9.39.2(jiti@2.6.1))(magicast@0.5.1)(typescript@5.9.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(yaml@2.8.2))
@@ -647,8 +653,14 @@ packages:
   '@iconify-json/lucide@1.2.87':
     resolution: {integrity: sha512-wxYIAp0f8Uw0rJa6BMWMaRbiHk3yV4XczA38GKXFlqyZtTdmHM1QOF4NZw5xpMlRDzbh2MnB7wjteLeFnn/ciQ==}
 
+  '@iconify-json/material-symbols@1.2.54':
+    resolution: {integrity: sha512-i2tBZPJeWI/DnvQ3DznodBOBQtZl0swLqyeCZx6yS6qXQ8aMGS4it/JgV3bRrffc3DbdIXGotPQqEBUJaDLqDw==}
+
   '@iconify-json/simple-icons@1.2.68':
     resolution: {integrity: sha512-bQPl1zuZlX6AnofreA1v7J+hoPncrFMppqGboe/SH54jZO37meiBUGBqNOxEpc0HKfZGxJaVVJwZd4gdMYu3hw==}
+
+  '@iconify-json/streamline-ultimate@1.2.2':
+    resolution: {integrity: sha512-0Vz9UHgMrmRUYt3JFqm0E6PDdroItVqK4fKf3T72jVwS2MAmc8dcqvCy+f0hzOVzJfo3G34ejFA9Y8l/K44hTQ==}
 
   '@iconify/collections@1.0.641':
     resolution: {integrity: sha512-G9LdUvewUdXp5SD4g06rWHpWo7s5/rQcsQxAQ3UQUqdRwkcUuPcGrY0qnZ0wzYLaeB0TVUrgC0MIigyhWiNgtQ==}
@@ -6650,7 +6662,15 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
+  '@iconify-json/material-symbols@1.2.54':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify-json/simple-icons@1.2.68':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/streamline-ultimate@1.2.2':
     dependencies:
       '@iconify/types': 2.0.0
 

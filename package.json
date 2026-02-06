@@ -21,6 +21,8 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "@iconify-json/material-symbols": "^1.2.54",
+    "@iconify-json/streamline-ultimate": "^1.2.2",
     "@nuxt/eslint": "^1.13.0",
     "eslint": "^9.39.2",
     "typescript": "^5.9.3",
