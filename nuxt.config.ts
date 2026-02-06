@@ -21,6 +21,10 @@ export default defineNuxtConfig({
     }
   },
 
+  future: {
+    compatibilityVersion: 4
+  },
+
   compatibilityDate: '2025-01-15',
 
   nitro: {
@@ -38,10 +42,6 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
-  },
-
-  future: {
-    compatibilityVersion: 4
   }
 
 })
