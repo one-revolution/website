@@ -42,6 +42,11 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+  image: {
+    provider: 'cloudinary',
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/threenine-co-uk/image/upload/'
+    }
   }
-
 })

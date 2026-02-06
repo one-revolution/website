@@ -21,20 +21,20 @@ hero:
       to: https://one-revolution.news
       target: _blank
 section:
-  title: '[Revolutionize]{.text-primary} your social media experience'
-  description: Transform your development workflow with AI-powered insights and personalized productivity optimization.
+  title: '[Revolutionize]{.text-primary} your internet experience'
+  description: Optimise your Social Media & News Feed for what specifically matters to you, not some leeching corporate algorithm.
   images:
     mobile: '/images/macbook-mobile.svg'
     desktop: '/images/macbook.svg'
   features:
-    - title: Optimize your focus time
-      description: Let AI identify your peak coding hours and adapt to your natural rhythm. Focus on what matters most - writing great code, while our system optimizes your productivity patterns.
+    - title: Focus on your interests
+      description: curate your news feed to focus on the content that matters to you.
       class: border-l border-primary pl-4
-    - title: Track your best coding hours
-      description: Track when you code best with smart analytics. Get actionable insights to tackle challenging tasks during your peak performance hours.
+    - title: Bookmark your favourites
+      description: make a note of the articles you like and easily access them later.
       class: border-l border-default pt-4 pl-4
-    - title: Improve workflow efficiency
-      description: Automate your workflow optimization from code snippets to focus management. Ship better code faster with a streamlined development process.
+    - title: Remove distractions
+      description: No more distractions, no more distraction adverts or serotonin rush addictions
       class: border-l border-default pt-4 pl-4
 features:
   title: Take control of your [productivity]{.text-primary}

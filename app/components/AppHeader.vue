@@ -29,10 +29,8 @@ nuxtApp.hooks.hookOnce('page:finish', () => {
   <UHeader>
     <template #left>
       <NuxtLink to="/">
-        <AppLogo class="w-auto h-6 shrink-0" />
+        <or-logo />
       </NuxtLink>
-
-      <TemplateMenu />
     </template>
 
     <template #right>

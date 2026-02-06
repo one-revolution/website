@@ -19,8 +19,8 @@ useSeoMeta({
   >
     <div class="hidden lg:block">
       <UColorModeImage
-        light="/images/light/line-1.svg"
-        dark="/images/dark/line-1.svg"
+        light="/one-revolution/light/line-1_lyrzto"
+        dark="/one-revolution/dark/line-1_kl1c0k"
         class="absolute pointer-events-none pb-10 left-0 top-0 object-cover h-[650px]"
       />
     </div>
@@ -94,8 +94,8 @@ useSeoMeta({
         />
         <div class="hidden @min-[1020px]:block">
           <UColorModeImage
-            light="/images/light/line-2.svg"
-            dark="/images/dark/line-2.svg"
+            light="/images/light/line-2_vzfhuu"
+            dark="/images/dark/line-2_l1xafr"
             class="absolute top-0 right-0 size-full transform scale-95 translate-x-[70%]"
           />
         </div>
@@ -111,8 +111,8 @@ useSeoMeta({
     >
       <template #headline>
         <UColorModeImage
-          light="/images/light/line-3.svg"
-          dark="/images/dark/line-3.svg"
+          light="/images/light/line-3_ftm11z"
+          dark="/images/dark/line-3_txyamc"
           class="absolute -top-10 sm:top-0 right-1/2 h-24"
         />
       </template>

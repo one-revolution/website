@@ -28,7 +28,7 @@ const shouldUseCloudinary = computed(() => !!props.src && isCloudinary(props.src
 
 <template>
   <div
-    :class="['inline-flex items-center justify-center overflow-hidden rounded-full bg-(--ui-bg-muted)', props.class]"
+    :class="['inline-flex items-center justify-center overflow-hidden rounded-full', props.class]"
     :style="props.size ? { width: `${props.size}px`, height: `${props.size}px` } : undefined"
   >
     <NuxtImg
