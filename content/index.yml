@@ -34,10 +34,10 @@ section:
       description: make a note of the articles you like and easily access them later.
       class: border-l border-default pt-4 pl-4
     - title: Remove distractions
-      description: No more distractions, no more distraction adverts or serotonin rush addictions
+      description: No more distractions, adverts or doom scrolls.
       class: border-l border-default pt-4 pl-4
 features:
-  title: Take control of your [productivity]{.text-primary}
+  title: Take control of your [attention]{.text-primary}
   description: Make every coding session count with smart analytics and workflow optimization.
   features:
     - title: AI-Powered Focus Tracking
