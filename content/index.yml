@@ -123,8 +123,8 @@ pricing:
         variant: subtle
         to: '#'
 testimonials:
-  title: Join thousands of productive [developers]{.text-primary}
-  description: See how developers are transforming their coding workflow and achieving more with our AI-powered platform.
+  title: Join thousands of [revolutions]{.text-primary}
+  description: See how we are transforming the social media with our human-first approach.
   items:
     - quote: Since using this tool, my productivity has doubled. The AI insights helped me find my perfect coding rhythm and now I ship features twice as fast.
       user:
