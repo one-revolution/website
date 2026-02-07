@@ -89,32 +89,16 @@ function onSubmit() {
 
     <template #left>
       <p class="text-sm text-muted">
-        Built with Nuxt UI • © {{ new Date().getFullYear() }}
+        One Revolution • © {{ new Date().getFullYear() }}
       </p>
     </template>
 
     <template #right>
       <UButton
-        to="https://go.nuxt.com/discord"
-        target="_blank"
-        icon="i-simple-icons-discord"
-        aria-label="Nuxt on Discord"
-        color="neutral"
-        variant="ghost"
-      />
-      <UButton
-        to="https://go.nuxt.com/x"
-        target="_blank"
-        icon="i-simple-icons-x"
-        aria-label="Nuxt on X"
-        color="neutral"
-        variant="ghost"
-      />
-      <UButton
-        to="https://github.com/nuxt-ui-templates/landing"
+        to="https://github.com/one-revolution"
         target="_blank"
         icon="i-simple-icons-github"
-        aria-label="Nuxt UI on GitHub"
+        aria-label="One Revolution on GitHub"
         color="neutral"
         variant="ghost"
       />

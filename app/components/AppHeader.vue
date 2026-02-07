@@ -19,7 +19,6 @@ const items = computed(() => [{
 nuxtApp.hooks.hookOnce('page:finish', () => {
   updateHeadings([
     document.querySelector('#features'),
-    document.querySelector('#pricing'),
     document.querySelector('#testimonials')
   ].filter(Boolean) as Element[])
 })
