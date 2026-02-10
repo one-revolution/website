@@ -17,6 +17,7 @@
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "^4.4.0",
     "@threenine/nuxt-fathom": "0.0.13",
+    "@types/node": "^25.2.3",
     "better-sqlite3": "^12.6.2",
     "nuxt": "^4.3.0",
     "tailwindcss": "^4.1.18"
