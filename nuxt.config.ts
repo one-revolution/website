@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
+    '@threenine/nuxt-fathom',
     '@nuxt/image',
     '@nuxt/ui',
     '@nuxt/content'
@@ -15,12 +16,14 @@ export default defineNuxtConfig({
   content: {
     experimental: { nativeSqlite: true }
   },
+  fathom: {
+    siteId: process.env.fathom_id
+  },
   mdc: {
     highlight: {
       noApiRoute: false
     }
   },
-
   future: {
     compatibilityVersion: 4
   },
