@@ -16,9 +16,6 @@ export default defineNuxtConfig({
   content: {
     experimental: { nativeSqlite: true }
   },
-  fathom: {
-    siteId: process.env.fathom_id
-  },
   mdc: {
     highlight: {
       noApiRoute: false
@@ -45,6 +42,9 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+  fathom: {
+    siteId: process.env.fathom_id
   },
   image: {
     provider: 'cloudinary',
